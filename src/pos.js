@@ -1,7 +1,6 @@
-'use strict';
-
+'use strict'
 function formatTags(tags) {
-  return tags.map(tag => {
+  return tags.map(function(tag){
     let tagPart = tag.split('-');
     return {
       barcode: tagPart[0],
@@ -9,6 +8,8 @@ function formatTags(tags) {
     }
   });
 }
+
+
 function mergeBarcode(formattedTags) {
   return formattedTags.reduce((mergedBarcodes, cur) => {
     let found = mergedBarcodes.find(entry => entry.barcode === cur.barcode);
@@ -21,38 +22,35 @@ function mergeBarcode(formattedTags) {
 
   }, []);
 }
-function getBarcodeAmountList(tags) {
-  let formattedTags = formatTags(tags);
-  let mergedBarcodes = mergeBarcode(formattedTags);
-  return mergedBarcodes;
-}
-function getPromotingInfo(barcodeAmountList, allPromotions) {
+function getPromotingInfo(barcodeAmountList,allPromotions) {
   let promotingInfo = [];
   for (let promotion of allPromotions) {
-    let promotingBarcodeAmountList = barcodeAmountList.filter((entry)=> {
+    let promotingBarcodeAmountList = barcodeAmountList.filter(function(entry){
       return promotion.barcodes.indexOf(entry.barcode) > -1;
     });
     for (let ba of promotingBarcodeAmountList) {
       promotingInfo.push(Object.assign({}, {barcode: ba.barcode}, {type: promotion.type}));
     }
-  }
-
+  };
   return promotingInfo;
+};
 
-
-}
-function calculateOriginSubTotalCartItems(barcodeAmountList, allItems) {
-  return barcodeAmountList.reduce((originSubTotalCarItems, entry)=> {
-    let found = allItems.find(item => entry.barcode === item.barcode);
-    if (found) {
-      originSubTotalCarItems.push(Object.assign({}, found, {
-        amount: entry.amount,
-        originSubTotal: found.price * entry.amount
+function calculateOriginSubTotalCartItems(barcodeAmountList,allItems){
+  return barcodeAmountList.reduce(function(originSubTotalCarItems,entry){
+    let found = allItems.find(function(item){
+      return entry.barcode === item.barcode;
+    })
+    if(found){
+      originSubTotalCarItems.push(Object.assign({},found,{
+        amount:entry.amount,
+        originSubTotal:found.price * entry.amount
       }));
     }
     return originSubTotalCarItems;
-  }, []);
+  },[])
 }
+
+
 function calculateDiscountedSubTotalCartItems(promotingInfo, originSubTotalCartItems) {
   let discountedSubTotalCartItems = [];
 

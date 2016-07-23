@@ -1,5 +1,16 @@
 'use strict';
-
+function loadPromotions(){
+  return [
+    {
+      type:'BUY_TWO_GET_ONE_FREE',
+      barcodes:[
+        'ITEM000000',
+        'ITEM000001',
+        'ITEM000005'
+      ]
+    }
+  ]
+}
 function loadAllItems() {
   return [
     {
@@ -37,19 +48,6 @@ function loadAllItems() {
       name: '方便面',
       unit: '袋',
       price: 4.50
-    }
-  ];
-}
-
-function loadPromotions() {
-  return [
-    {
-      type: 'BUY_TWO_GET_ONE_FREE',
-      barcodes: [
-        'ITEM000000',
-        'ITEM000001',
-        'ITEM000005'
-      ]
     }
   ];
 }
